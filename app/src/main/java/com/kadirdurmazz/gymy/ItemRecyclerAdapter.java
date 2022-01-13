@@ -17,7 +17,6 @@ import java.util.List;
 public class ItemRecyclerAdapter extends RecyclerView.Adapter {
     List<Item> items;
     private Context context;
-
     private int selectedItem;
 
     public ItemRecyclerAdapter(Context context, List<Item> items){
@@ -50,9 +49,10 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter {
         myHolder.field4.setText(item.getField4());
         myHolder.field5.setText(item.getField5());
 
-        if(selectedItem == position){
+        if (selectedItem == position) {
             myHolder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.redColor));
         }
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
