@@ -200,7 +200,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month+1;
-                String date = day+"/"+month+"/"+year;
+                String date = day+"-"+month+"-"+year;
                 String formattedDate = day+"-"+month+"-"+year;
                 btnDatePicker.setText(date);
                 selectedDate = formattedDate;

@@ -97,7 +97,7 @@ public class DashboardFragment extends Fragment{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(activity,"ERROR: "+error.getDetails(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -121,7 +121,6 @@ public class DashboardFragment extends Fragment{
                 itemRecyclerAdapter.notifyDataSetChanged();
                 setVisibilities();
             }
-
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);

@@ -22,7 +22,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter {
     public ItemRecyclerAdapter(Context context, List<Item> items){
         this.context = context;
         this.items = items;
-        selectedItem = 0;
+        selectedItem = 999999;
     }
 
     @NonNull

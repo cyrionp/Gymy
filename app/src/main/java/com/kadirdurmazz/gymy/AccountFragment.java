@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AccountFragment extends Fragment {
@@ -39,7 +43,8 @@ public class AccountFragment extends Fragment {
 
     String userUID, userEmail;
     List<User> myUser;
-    TextView txtAccount_Email, txtAccount_Name, txtAccount_Type, txtAccount_Gender, txtAccount_Age, txtAccount_Height, txtAccount_Weight;
+    TextView txtAccount_Email, txtAccount_Type;
+    EditText txtAccount_Name, txtAccount_Gender, txtAccount_Age, txtAccount_Height, txtAccount_Weight;
 
     DatabaseReference mRef;
     FirebaseDatabase db;
@@ -66,10 +71,18 @@ public class AccountFragment extends Fragment {
         txtAccount_Height = view.findViewById(R.id.txtAccount_Height);
         txtAccount_Weight = view.findViewById(R.id.txtAccount_Weight);
 
+        Button btnUpdateUser = view.findViewById(R.id.btnUpdateUser);
         Button btnLogout = view.findViewById(R.id.btnLogout);
         txtAccount_Email.setText("Email: "+userEmail);
 
         getUserData();
+
+        btnUpdateUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUser();
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,17 +104,45 @@ public class AccountFragment extends Fragment {
                 User user = dataSnapshot.getValue(User.class);
                 myUser.add(user);
 
-                txtAccount_Name.setText("Name: "+myUser.get(0).getName());
+                txtAccount_Name.setText(myUser.get(0).getName());
                 txtAccount_Type.setText("Type: "+myUser.get(0).getType());
-                txtAccount_Gender.setText("Gender: "+myUser.get(0).getGender());
-                txtAccount_Age.setText("Age: "+myUser.get(0).getAge());
-                txtAccount_Height.setText("Height: "+myUser.get(0).getHeight());
-                txtAccount_Weight.setText("Weight: "+myUser.get(0).getWeight());
+                txtAccount_Gender.setText(myUser.get(0).getGender());
+                txtAccount_Age.setText(myUser.get(0).getAge());
+                txtAccount_Height.setText(myUser.get(0).getHeight());
+                txtAccount_Weight.setText(myUser.get(0).getWeight());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(activity,"ERROR: "+error.getDetails(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateUser(){
+        String name = txtAccount_Name.getText().toString().trim();
+        String gender = txtAccount_Gender.getText().toString().trim();
+        String age = txtAccount_Age.getText().toString().trim();
+        String height = txtAccount_Height.getText().toString().trim();
+        String weight = txtAccount_Weight.getText().toString().trim();
+
+        db = FirebaseDatabase.getInstance();
+        mRef = db.getReference("Users/"+userUID);
+
+        Map map = new HashMap();
+        map.put("uid",userUID);
+        map.put("type","basic");
+        map.put("email",userEmail);
+        map.put("name",name);
+        map.put("gender",gender);
+        map.put("age",age);
+        map.put("height",height);
+        map.put("weight",weight);
+
+        mRef.updateChildren(map).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Toast.makeText(activity, "Your information is updated", Toast.LENGTH_SHORT).show();
             }
         });
     }

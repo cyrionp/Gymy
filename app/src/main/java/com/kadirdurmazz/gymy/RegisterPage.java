@@ -80,7 +80,7 @@ public class RegisterPage extends AppCompatActivity {
         String height = txtHeight.getText().toString().trim();
         String weight = txtWeight.getText().toString().trim();
 
-        int _age=Integer.parseInt(txtAge.getText().toString().trim());
+        int _age = Integer.parseInt(txtAge.getText().toString().trim());
         int _height = Integer.parseInt(txtHeight.getText().toString().trim());
         int _weight = Integer.parseInt(txtWeight.getText().toString().trim());
 

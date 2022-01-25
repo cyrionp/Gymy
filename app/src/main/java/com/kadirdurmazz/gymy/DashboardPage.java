@@ -19,12 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DashboardPage extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
-
-    DatabaseReference mRef;
-    FirebaseDatabase db;
-    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     BottomNavigationView bottomNavigationView;
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -35,17 +30,7 @@ public class DashboardPage extends AppCompatActivity implements BottomNavigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.home);
-
-        //This line will be deleted
-        Toast.makeText(this, "Signed in email: " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
     }
-
-
-    DashboardFragment dashboardFragment = new DashboardFragment(this);
-    AddFragment addFragment = new AddFragment(this);
-    AccountFragment accountFragment = new AccountFragment(this);
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

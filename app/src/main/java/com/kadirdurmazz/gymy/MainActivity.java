@@ -27,6 +27,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // This project is created by Abdulkadir DURMAZ
+
     EditText txtEmail, txtPassword;
     Button btnLogin;
     TextView tvGoRegister, tvForgotPassword;
