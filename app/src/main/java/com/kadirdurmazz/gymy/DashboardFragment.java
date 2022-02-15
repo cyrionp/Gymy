@@ -80,6 +80,8 @@ public class DashboardFragment extends Fragment{
 
         db = FirebaseDatabase.getInstance();
         mRef = db.getReference("Items/"+userUID);
+        mRef.keepSynced(true);
+
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,6 +95,7 @@ public class DashboardFragment extends Fragment{
                 itemRecyclerAdapter = new ItemRecyclerAdapter(activity, items);
                 recyclerView.setAdapter(itemRecyclerAdapter);
                 setVisibilities();
+                mRef.keepSynced(true);
             }
 
             @Override
@@ -116,6 +119,7 @@ public class DashboardFragment extends Fragment{
                 db = FirebaseDatabase.getInstance();
                 mRef = db.getReference("Items/"+userUID);
                 mRef.child(selectedItem).removeValue();
+                mRef.keepSynced(true);
 
                 itemRecyclerAdapter.notifyItemRemoved(position);
                 itemRecyclerAdapter.notifyDataSetChanged();
